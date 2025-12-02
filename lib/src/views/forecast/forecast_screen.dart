@@ -29,8 +29,6 @@ class ForecastScreen extends StatelessWidget {
         ),
       )
           : Container(
-        width: double.infinity,
-        height: double.infinity,
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [
@@ -58,19 +56,18 @@ class ForecastScreen extends StatelessWidget {
                 legend: Legend(isVisible: false),
                 tooltipBehavior: TooltipBehavior(enable: true),
 
-                /// X-axis labels (date + time)
                 primaryXAxis: CategoryAxis(
                   labelRotation: 70,
                   majorGridLines: const MajorGridLines(width: 0),
                   labelStyle: const TextStyle(fontSize: 10),
                 ),
 
-                /// Line chart series
-                series: <ChartSeries<ForecastItem, String>>[
+                /// 🔧 FIXED: ChartSeries → CartesianSeries
+                series: <CartesianSeries<ForecastItem, String>>[
                   LineSeries<ForecastItem, String>(
                     dataSource: data,
                     xValueMapper: (d, _) =>
-                    '${d.date.month}/${d.date.day} ${d.date.hour}:00',
+                    "${d.date.month}/${d.date.day} ${d.date.hour}:00",
                     yValueMapper: (d, _) => d.temp,
                     color: Theme.of(context).colorScheme.primary,
                     width: 3,
@@ -79,9 +76,6 @@ class ForecastScreen extends StatelessWidget {
                       height: 8,
                       width: 8,
                       shape: DataMarkerType.circle,
-                    ),
-                    dataLabelSettings: const DataLabelSettings(
-                      isVisible: false,
                     ),
                   ),
                 ],
